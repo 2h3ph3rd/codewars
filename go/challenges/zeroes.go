@@ -1,7 +1,11 @@
 package kata
 
 import (
+	"fmt"
 	"strconv"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 /*
@@ -18,7 +22,7 @@ Zeroes(17) == 3 -> 17! = ... * 5 * 2 * 10 * 15 (5*3) * ...
 Zeroes(25) == 6 -> 17! = ... * 5 * 2 * 10 * 15 (5*3) * 20 * 25 (5*5) * ...
 */
 
-func Zeroes(base, number int) int {
+func Zeros(base, number int) int {
 	num, err := strconv.ParseInt(strconv.FormatInt(int64(number), 10), base, 64)
 	if err != nil {
 		return 0
@@ -38,4 +42,25 @@ func ZerosRec(n int) int {
 		return 0
 	}
 	return n/5 + ZerosRec(n/5)
+}
+
+func Test(t *testing.T) {
+	tests := []struct {
+		param1   int
+		param2   int
+		expected int
+	}{
+		{10, 10, 2},
+		{10, 16, 3},
+		{10, 25, 6},
+		{10, 100, 24},
+		{10, 1000, 249},
+	}
+
+	for i, test := range tests {
+		actual := Zeros(test.param1, test.param2)
+		// actual := ZerosRec(test.param2)
+		msg := fmt.Sprintf("test %d not passed\n", i)
+		assert.Equal(t, test.expected, actual, msg)
+	}
 }
