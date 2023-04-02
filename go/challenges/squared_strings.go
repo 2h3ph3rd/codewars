@@ -1,22 +1,15 @@
 package kata
 
 import (
+	"fmt"
 	"math"
 	"strings"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // https://www.codewars.com/kata/56fcc393c5957c666900024d
-
-// reverse return the given string in reverse
-// i.e. reverse("Hello!") -> "!olleH"
-func reverse(s string) string {
-	new := []byte{}
-	for i := len(s); i > 0; i-- {
-		new = append(new, s[i-1])
-	}
-
-	return string(new)
-}
 
 func Code(s string) string {
 	// len(s) = n*n
@@ -41,7 +34,7 @@ func Code(s string) string {
 
 	// update each block in reverse
 	for i := range words {
-		words[i] = reverse(words[i])
+		words[i] = Reverse(words[i])
 	}
 
 	// join blocks together
@@ -70,4 +63,24 @@ func Decode(s string) string {
 	// remove padding
 	decoded = strings.TrimRight(decoded, "\v")
 	return decoded
+}
+
+func TestCode(t *testing.T) {
+	tests := []struct {
+		param    string
+		expected string
+	}{
+		{"I.was.going.fishing.that.morning.at.ten.o'clock", "c.nhsoI\nltiahi.\noentinw\ncng.nga\nk..mg.s\n\voao.f.\n\v'trtig"},
+		{"Process terminated with status 0 (0 minute(s), 6 second(s))", "s t setP\n)se(tder\n)e(0a ro\n\vcs twmc\n\vo)muiie\n\vn,istns\n\vd n has\n\v(6u0 t "},
+	}
+
+	for i, test := range tests {
+		actual := Code(test.param)
+		msg := fmt.Sprintf("test Code %d not passed\n", i)
+		assert.Equal(t, test.expected, actual, msg)
+
+		actual = Decode(test.expected)
+		msg = fmt.Sprintf("test Decode %d not passed\n", i)
+		assert.Equal(t, test.param, actual, msg)
+	}
 }

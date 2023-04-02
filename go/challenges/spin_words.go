@@ -9,7 +9,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func reverse(s string) string {
+// Reverse return the given string in reverse
+// i.e. reverse("Hello!") -> "!olleH"
+func Reverse(s string) string {
 	new := []byte{}
 	for i := len(s); i > 0; i-- {
 		new = append(new, s[i-1])
@@ -23,7 +25,7 @@ func SpinWords(str string) string {
 
 	for i, s := range arr {
 		if len(s) >= 5 {
-			s = reverse(s)
+			s = Reverse(s)
 		}
 
 		arr[i] = s

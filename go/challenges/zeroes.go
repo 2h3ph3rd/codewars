@@ -44,7 +44,7 @@ func ZerosRec(n int) int {
 	return n/5 + ZerosRec(n/5)
 }
 
-func Test(t *testing.T) {
+func TestZeros(t *testing.T) {
 	tests := []struct {
 		param1   int
 		param2   int
